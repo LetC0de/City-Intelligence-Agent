@@ -47,18 +47,22 @@ body {
     background-color: var(--header-bg);
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
+    text-align: center;
 }
 
 .chat-header h1 {
     font-size: 20px;
     font-weight: 600;
     color: var(--text-color);
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
 }
 
 .chat-header p {
     font-size: 14px;
     color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: 0.3px;
 }
 
 .chat-messages {
@@ -218,7 +222,16 @@ body {
     }
 
     .chat-header {
-        padding: 20px;
+        padding: 24px 20px;
+    }
+
+    .chat-header h1 {
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    .chat-header p {
+        font-size: 15px;
     }
 
     .chat-messages {
@@ -240,11 +253,16 @@ body {
     }
 
     .chat-header {
-        padding: 24px;
+        padding: 28px 24px;
     }
 
     .chat-header h1 {
-        font-size: 24px;
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .chat-header p {
+        font-size: 16px;
     }
 
     .chat-messages {
