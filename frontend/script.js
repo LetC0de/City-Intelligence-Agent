@@ -1,5 +1,5 @@
 // API Configuration - Change this to your deployed backend URL
-const API_BASE_URL = "http://localhost:5000";  // Replace with your Render URL when deploying
+const API_BASE_URL = "https://city-intelligence-agent.onrender.com";  // Replace with your Render URL when deploying
 
 const messageInput = document.getElementById('messageInput');
 const sendButton = document.getElementById('sendButton');
