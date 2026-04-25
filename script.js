@@ -24,7 +24,18 @@ function addMessage(text, isUser) {
 
     const messageContent = document.createElement('div');
     messageContent.className = 'message-content';
-    messageContent.textContent = text;
+
+    // Preserve line breaks
+    messageContent.style.whiteSpace = 'pre-wrap';
+
+    // Convert URLs to clickable links and remove markdown formatting
+    let formattedText = text
+        // Remove markdown bold (**text**)
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        // Convert URLs to clickable links
+        .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+
+    messageContent.innerHTML = formattedText;
 
     messageDiv.appendChild(messageContent);
     chatMessages.appendChild(messageDiv);

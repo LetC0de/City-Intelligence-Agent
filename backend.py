@@ -17,7 +17,42 @@ app = Flask(__name__)
 CORS(app)
 
 # Initialize LLM
-llm = ChatMistralAI(model="mistral-small-2506")
+llm = ChatMistralAI(model="mistral-small-2506", temperature=0.7)
+
+# System prompt for better formatting
+SYSTEM_PROMPT = """You are a helpful City Intelligence Agent that provides weather and news information.
+
+IMPORTANT FORMATTING RULES:
+- Always format your responses with proper structure and spacing
+- Use bullet points (•) for lists
+- Add line breaks between sections for readability
+- Use emojis sparingly and appropriately (weather emoji for weather, news emoji for news)
+- Keep responses clear, organized, and easy to read
+
+When providing NEWS:
+1. Start with a brief 1-2 sentence overview about the city's current news situation
+2. Then list each news item with bullet points
+3. Include clickable links for each news source
+4. Format like this:
+
+📰 Current News in [City]:
+[Brief overview sentence about what's happening]
+
+• **[Headline]**
+  🔗 Source: [URL]
+  [Brief 1-line description]
+
+• **[Headline]**
+  🔗 Source: [URL]
+  [Brief 1-line description]
+
+When providing WEATHER:
+- Use weather emoji (☀️🌤️⛅🌦️🌧️⛈️❄️)
+- Format clearly with temperature and conditions
+- Keep it concise
+
+Always be helpful, friendly, and well-formatted!
+"""
 
 # Get API keys
 weather_api_key = os.getenv("OPENWHEATHER_API_KEY")
@@ -59,14 +94,20 @@ def get_news(city: str) -> str:
     if not results:
         return f"No news found for {city}"
 
-    news_list = []
-    for r in results:
+    # Format news nicely with longer descriptions
+    news_items = []
+    for i, r in enumerate(results, 1):
         title = r.get("title", "No title")
         url = r.get("url", "")
-        snippet = r.get("content", "")
-        news_list.append(f"- {title}\n  Link: {url}\n  {snippet[:100]}...")
+        snippet = r.get("content", "")[:500]  # Increased from 150 to 300 chars for 3-4 lines
 
-    return f"Latest news in {city}:\n\n" + "\n\n".join(news_list)
+        news_items.append(
+            f"{i}. {title}\n"
+            f"   Link: {url}\n"
+            f"   Summary: {snippet}..."
+        )
+
+    return f"Latest news about {city}:\n\n" + "\n\n".join(news_items)
 
 
 # Create tools list
@@ -93,8 +134,10 @@ def chat():
         if not user_message:
             return jsonify({"error": "No message provided"}), 400
 
-        # Create user message
-        messages = [HumanMessage(content=user_message)]
+        # Create messages with system prompt
+        messages = [
+            HumanMessage(content=SYSTEM_PROMPT + "\n\nUser: " + user_message)
+        ]
 
         # Send to LLM with tools
         ai_response = llm_with_tools.invoke(messages)
@@ -169,9 +212,9 @@ def approve_tool():
                 tool_call_id=tool_call["id"]
             )
 
-            # Now ask LLM to respond with the tool result
+            # Now ask LLM to respond with the tool result (with system prompt)
             messages = [
-                HumanMessage(content=user_message),
+                HumanMessage(content=SYSTEM_PROMPT + "\n\nUser: " + user_message),
                 ai_message,
                 tool_message
             ]
@@ -193,7 +236,7 @@ def approve_tool():
             )
 
             messages = [
-                HumanMessage(content=user_message),
+                HumanMessage(content=SYSTEM_PROMPT + "\n\nUser: " + user_message),
                 ai_message,
                 tool_message
             ]
