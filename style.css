@@ -1,18 +1,18 @@
 :root {
-    --bg-color: #e8f4f8;
-    --container-bg: #ffffff;
-    --header-bg: #f8fbfc;
-    --user-msg-bg: #0ea5e9;
-    --bot-msg-bg: #f1f5f9;
-    --text-color: #0f172a;
-    --text-secondary: #64748b;
-    --border-color: #e2e8f0;
-    --input-border: #cbd5e1;
-    --input-focus: #0ea5e9;
-    --button-bg: #0ea5e9;
-    --button-hover: #0284c7;
-    --shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
-    --shadow-lg: 0 8px 24px rgba(14, 165, 233, 0.12);
+    --bg-color: #d4e8f0;
+    --container-bg: #f8fbfd;
+    --header-bg: #eef5f9;
+    --user-msg-bg: #0891b2;
+    --bot-msg-bg: #e8eff5;
+    --text-color: #0a1929;
+    --text-secondary: #546e7a;
+    --border-color: #cfd8dc;
+    --input-border: #b0bec5;
+    --input-focus: #0891b2;
+    --button-bg: #0891b2;
+    --button-hover: #0e7490;
+    --shadow: 0 2px 8px rgba(8, 145, 178, 0.1);
+    --shadow-lg: 0 8px 24px rgba(8, 145, 178, 0.15);
 }
 
 * {
@@ -75,16 +75,16 @@ body {
 }
 
 .chat-messages::-webkit-scrollbar-track {
-    background: #f8fbfc;
+    background: #eef5f9;
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #b0bec5;
     border-radius: 3px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #78909c;
 }
 
 .message {
