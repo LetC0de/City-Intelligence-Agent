@@ -1,3 +1,6 @@
+// API Configuration - Change this to your deployed backend URL
+const API_BASE_URL = "http://localhost:5000";  // Replace with your Render URL when deploying
+
 const messageInput = document.getElementById('messageInput');
 const sendButton = document.getElementById('sendButton');
 const chatMessages = document.getElementById('chatMessages');
@@ -64,7 +67,7 @@ function sendMessage() {
     sendButton.textContent = 'Sending...';
 
     // Send message to backend
-    fetch('http://localhost:5000/chat', {
+    fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -143,7 +146,7 @@ function handleApproval(approved) {
     approveBtn.textContent = 'Processing...';
 
     // Send approval decision to backend
-    fetch('http://localhost:5000/approve', {
+    fetch(`${API_BASE_URL}/approve`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
